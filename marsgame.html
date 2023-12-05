@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Game</title>
+    <style>
+        #container, #info, #controller {
+            width: 800px;
+            height: 500px;
+            margin: 10px auto;
+            background-color: white;
+            background-size: 150px 150px;
+            animation: scroll 5s linear infinite;
+            border: 10px solid black;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+        }
+        #info {
+            height: 200px;
+        }
+        #controller {
+            height: 100px;
+            position: relative;
+        }
+        #container {
+            background-image: url('Img\\Planets\\MarsBackgorund.png');
+            background-size: cover;
+            background-position: center;
+        }
+        button {
+            position: absolute;
+            padding: 15px 25px;
+            color: white;
+            font-size: 20px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        #left-button {
+            bottom: 20px;
+            left: 50%;
+            background-color: green;
+            box-shadow: 0px 1px 4px -2px black;
+        }
+        #right-button {
+            bottom: 20px;
+            left: 75%;
+            background-color: green;
+            box-shadow: 0px 1px 4px -2px black;
+        }
+        #home-button{
+            bottom: 20px;
+            left: 5%;
+            background-color: red;
+            box-shadow: 0px 1px 4px -2px black;
+        }
+        #progress-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #progress-label {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        #progress-bar {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #ddd;
+            height: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        #progress {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            line-height: 20px;
+            color: white;
+        }
+        #character {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            position: absolute;
+            bottom: 10px;
+            left: 45%;
+            margin-left: 0;
+        }
+        #character img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+        #progress-label {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 20px;
+        }
+        #ball {
+            width: 100px;
+            height: 100px;
+            background-image: url('Img\\Misc\\Meteorite.png');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #star {
+            width: 50px;
+            height: 50px;
+            background-image: url('Img\\Misc\\Star.png');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 80%;
+            transform: translateX(-50%);
+        }  
+        #lives {
+            position: absolute;
+            bottom: 450px;
+            left: 2%; 
+            color: white; 
+            z-index: 1000; 
+        }
+    </style>
+</head>
+<body style="background: url('Img\\Misc\\MainBackground.webp') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div id="info">
+        <h1>Beginning your Adventure</h1>
+        <p>Use the left and right buttons to move your character to avoid the incoming Meteorite!!!! <br>Collect the star to increase your progress bar.</p>
+        <div id="progress-container">
+            <div id="progress-label"></div>
+            <div id="progress-bar">
+                <div id="progress"></div>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="game-container">
+            <p id="lives">Character Lives: <span id="lives-span">3</span></p>
+            <div id="character">
+                <img src="your-image-url.jpg" alt="Character Image">
+            </div>
+            <div id="ball"></div>
+            <div id="star"></div>
+        </div>
+    </div>
+    <div id="controller">
+        <button id="left-button" onclick="moveCharacter('left')">Move Left</button>
+        <button id="home-button" onclick="BackHome('home')">Home</button>
+        <button id="right-button" onclick="moveCharacter('right')">Move Right</button>
+    </div>
+
+    <script>
+        var character = document.getElementById('character');
+        var progressBar = document.getElementById('progress');
+        var progress = 0;
+        var selectedPlanet = ''; // Global variable to store the selected planet
+        
+        // Function to get URL parameters
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+        // Get character, image, and planet parameters from the URL
+        var selectedCharacter = getParameterByName('character');
+        var selectedImage = getParameterByName('image');
+        selectedPlanet = getParameterByName('planet') || 'Unknown'; // Store the selected planet
+        
+        // Set the image source of the character
+        character.querySelector('img').src = selectedImage;
+        
+        // Set the progress label based on the selected planet
+        var progressLabel = document.getElementById('progress-label');
+        progressLabel.innerText = 'Heading Towards Planet Mars which is 233.87 million miles from earth';
+        
+        function moveCharacter(direction) {
+            // Move the character left or right
+            var currentPosition = parseInt(window.getComputedStyle(character).getPropertyValue('left'));
+            var containerWidth = document.getElementById('container').offsetWidth;
+            var characterWidth = character.offsetWidth; // Adjusted to consider the character's width
+            var newPosition;
+        
+            if (direction === 'left') {
+                newPosition = Math.max(currentPosition - 100, 0);
+            } else {
+                newPosition = Math.min(currentPosition + 100, containerWidth - characterWidth);
+            }
+        
+            character.style.left = newPosition + 'px';
+        }
+        
+        function startGame() {
+            // Start the game logic
+            setInterval(updateProgress, 100);
+        }
+        
+        function updateProgress() {
+    // Update the progress bar
+    progress += 0.5; // changable value
+    progressBar.style.width = progress + '%';
+
+    if (progress >= 100) {
+        // Redirect to the corresponding planet page when the progress is complete
+            window.location.href = 'Mars.html?character=' + selectedCharacter + '&image=' + selectedImage;
+
+    }
+}
+        
+        var ball = document.getElementById('ball');
+        var ballSpeed = 3; // changable value
+        var star = document.getElementById('star');
+        var starSpeed = 2; // changable value
+        
+        function moveBall() {
+            var currentTop = parseInt(window.getComputedStyle(ball).getPropertyValue('top'));
+            var containerHeight = document.getElementById('container').offsetHeight;
+            var ballHeight = ball.offsetHeight;
+        
+            if (currentTop + ballSpeed < containerHeight - ballHeight) {
+                ball.style.top = currentTop + ballSpeed + 'px';
+            } else {
+                // Ball reached the bottom, reset its position to the top
+                ball.style.top = 0;
+                // Randomly set the ball's horizontal position within the container's width
+                ball.style.left = Math.floor(Math.random() * (container.offsetWidth - ball.offsetWidth)) + 'px';
+            }
+        }
+        function moveStar() {
+            var currentTop = parseInt(window.getComputedStyle(star).getPropertyValue('top'));
+            var containerHeight = document.getElementById('container').offsetHeight;
+            var starHeight = star.offsetHeight;
+        
+            if (currentTop + starSpeed < containerHeight - starHeight) {
+                star.style.top = currentTop + starSpeed + 'px';
+            } else {
+                // Ball reached the bottom, reset its position to the top
+                star.style.top = 0;
+                // Randomly set the ball's horizontal position within the container's width
+                star.style.left = Math.floor(Math.random() * (container.offsetWidth - star.offsetWidth)) + 'px';
+            }
+        }
+        var lives = 3; // Initialize lives to 3
+        var livesSpan = document.getElementById('lives-span');
+        // collision checking
+        function checkCollision() {
+            var characterRect = character.getBoundingClientRect();
+            var ballRect = ball.getBoundingClientRect();
+            var starRect = star.getBoundingClientRect();
+
+            // Check for collision
+            if (
+                characterRect.left < ballRect.right &&
+                characterRect.right > ballRect.left &&
+                characterRect.top < ballRect.bottom &&
+                characterRect.bottom > ballRect.top
+            ) {
+                // Decrement lives
+                lives--;
+                livesSpan.innerText = lives;
+
+                if (lives <= 0) {
+                    // If no lives left, reset progress and lives
+                    window.location.href = 'GameOver.html?character=' + selectedCharacter + '&image=' + selectedImage;
+                } else {
+                    // Reset the ball's position
+                    resetBall();
+                }
+            } else if(characterRect.left < starRect.right &&
+                characterRect.right > starRect.left &&
+                characterRect.top < starRect.bottom &&
+                characterRect.bottom > starRect.top) 
+            {
+                progress += 5; //changable value
+                resetStar();
+            }
+        }
+        
+        function resetGame() {
+            // Reset progress, lives, and any other game state
+            progress = 0;
+            progressBar.style.width = '0%';
+            lives = 3;
+            livesSpan.innerText = lives;
+        }
+
+        function resetBall() {
+            // Reset the ball's position to the top
+            ball.style.top = 0;
+            // Randomly set the ball's horizontal position within the container's width
+            ball.style.left = Math.floor(Math.random() * (container.offsetWidth - ball.offsetWidth)) + 'px';
+        }
+        function resetStar() {
+        // Reset the star's position to the top
+        star.style.top = 0;
+        // Randomly set the star's horizontal position within the container's width
+        star.style.left = Math.floor(Math.random() * (container.offsetWidth - star.offsetWidth)) + 'px';
+        }
+        // game loop of checking moving ball and star and check collision
+        function gameLoop() {
+            moveStar();
+            moveBall();
+            checkCollision();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function BackHome() {
+            // Define the action for the back button
+            window.location.href = 'HomePage.html';
+        }
+        
+        // Start the game loop when the page loads, with random star and ball drops
+        window.onload = function () {
+          resetBall();
+          resetStar();
+         startGame();
+          gameLoop();
+        };
+        </script>
+</body>
+
+</html>

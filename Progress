@@ -1,0 +1,60 @@
+10/17/2023
+---------------------------------------------------------------------------------------------
+decided to make project on VSC and use programming language javascript
+set up files for future project work
+followed a small tutorial to simply output in the terminal console "hello world"
+11/10/2023
+---------------------------------------------------------------------------------------------
+Worked on Home page and played around with features
+Ended up getting home page to designed wanted 
+Finished home page
+worked on Character selection page
+added 3 shapes for selection for now
+added home page which allows you to actually access the home page
+11/18/2023
+---------------------------------------------------------------------------------------------
+Reworked home page, after discussion with group to remodel some designs
+finished home Page by adding in a solar system image
+started an idea for character selection, found a video to help set up idea
+11/22/2023
+---------------------------------------------------------------------------------------------
+began work on character selection page, followed a tutorial to help with some features
+added character images that were wanted such as superman and unicorn
+allowed for options of 4 characters to be selected by user
+once character clicked then a yellow begin buttons displays to move onto the path selection page
+added a info box under the character selection area so instruct users to pick a character
+11/25/2023
+---------------------------------------------------------------------------------------------
+began work on path selection page, went with same format as character selection page
+allowed for user choice of character to carry over to path selection page
+added info at top to instruct user to pick a path they want to explore
+added 2 examples paths which are Saturn and Mars, along with a back button which goes back to character selection page
+buttons do get bigger when hovered over so user knows the button they are on
+11/26/2023 & 11/27/2023
+---------------------------------------------------------------------------------------------
+Started work on the game page which is our important page
+same format with other pages, went with game being played inside a box
+allowed character of user choice to be carried over to game
+made buttons in the controller box that allow for interaction of tapping or in this case clicking
+left button and right button both move character left or right to dodge the incoming meteorite
+added info at top to let user know to dodge the incoming meteorite
+added a progress bar that actually fills up over time as the user must dodge the meteorite
+11/29/2023 & 11/30/2023
+---------------------------------------------------------------------------------------------
+talked with group and decided to add more features to the game, added lives of up to 3
+when user character gets hit they lose 1 life
+displayed lives in the controller box along with the new home button also added
+when user loses all lives then they get sent to a new page called game over
+game over page says some info and allows for user to retry which sends them back to path selection page
+updated the progress bar so it loads smoother and not chunky like before
+also added a star which allows for user to collect and it increases the progress bar faster
+then worked on mars and saturn pages to display a win page and information for user to learn and explore these 2 planets
+when user finished the progress bar in the game page, depending on chosen path they get taken to that planet they chose
+12/1/2023 & 12/2/2023
+---------------------------------------------------------------------------------------------
+Remodeled the character selection so the buttons show what you selected and what button you are hovered over
+remodeled the path selection to do the same as well as show begin button before starting the adventure
+added all images into the right folders so it looks neat to view
+added saturngame and marsgame to separate the backgrounds when either taking the saturn path or mars path
+small details and fixes, like controller bar for the character selection page to keep buttons in place
+also lined up the bullet points on the fact pages so information is easier to read and view

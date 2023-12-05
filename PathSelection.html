@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Selection Page</title>
+    <style>
+        #container, #info, #controller, #mars, #saturn {
+            width: 700px;
+            height: 600px;
+            margin: 20px auto;
+            background-color: white;
+            background-position: center; 
+            border: 10px solid black;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+        }
+        #info {
+            height: 100px;
+        }
+        #controller {
+            height: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0px;
+            position: fixed;
+            z-index: 999;
+        }
+        #container {
+            background-image: url('Img\\Planets\\RandomPlanet.png');
+        }
+        #mars {
+            background-image: url('Img\\Planets\\Mars.jpg');
+        }
+        #saturn {
+            background-image: url('Img\\Planets\\Saturn.jpg');
+        }
+        #image {
+            height: 88%;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        img {
+            margin-top: 100px;
+            height: auto;
+            max-height: 1000px;
+            max-width: 1000px;
+            animation: gloweffect 2s infinite;
+        }
+        @keyframes gloweffect {
+            0%, 100% {filter: drop-shadow(0 0 0.35rem rgb(0, 255, 242));}
+            25% {filter: drop-shadow(0 0 0.65rem rgb(76, 0, 255));}
+            50% {filter: drop-shadow(0 0 0.85rem rgb(195, 0, 255));}
+        }
+        #name {
+            position: absolute;
+            z-index: 99999;
+            font-size: 60pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            filter: drop-shadow(0 0 0.90rem rgb(0, 0, 0));
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 10%;
+            color: white;
+            font-weight: bold;
+            -webkit-text-stroke: 3px black;
+        }
+        button.active {
+        background-color: green; /* Change this to your desired color */
+        color: black; /* Change this to your desired text color */
+}
+        button {
+            position: relative;
+            display: inline-block;
+            padding: 15px 25px;
+            color: black;
+            font-size: 20px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border-radius: 3px;
+            box-shadow: 0px 1px 4px -2px black;
+            text-shadow: 0px -1px black;
+            border-radius: 10px;
+        }
+        button:after {
+            content: '';
+            position: absolute;
+            background-color: green;
+            top: 5px;
+            left: 5px;
+            width: calc(100% - 4px);
+            height: 20%;
+            background: linear-gradient(rgba(255,255,255,1), rgba(255, 255, 255, 0.2));
+            border-radius: 10px;
+        }
+        button:hover {
+            background-color: lightgreen;
+            color: black;
+            font-size: 28px;
+        }
+        button.active {
+            background-color: green;
+            color: black;
+        }
+        #home-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: yellow;
+            color: black;
+            font-size: 20px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0px 1px 4px -2px black;
+            text-shadow: 0px -1px black;
+            cursor: pointer;
+        }
+        #home-button:hover {
+            background-color: gold;
+        }
+        #back-button {
+            position: absolute;
+            padding: 15px 25px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: yellow;
+            color: black;
+            font-size: 20px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0px 1px 4px -2px black;
+            text-shadow: 0px -1px black;
+            cursor: pointer;
+        }
+        #back-button:hover {
+            background-color: gold;
+        }
+        #begin-button {
+            display: none; /* Initially hide the Begin button */
+            position: absolute;
+            padding: 15px 25px;
+            bottom: 20px;
+            left: 80%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: yellow;
+            color: black;
+            font-size: 20px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0px 1px 4px -2px black;
+            text-shadow: 0px -1px black;
+        }
+        #begin-button:hover {
+            background-color: gold;
+        }
+        p {
+            font-size: larger;
+        }
+    </style>
+</head> 
+<body style="background: url('Img\\Misc\\Mainbackground.webp') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div id="info">
+        <h2>Path Selection Page</h2>
+        <p>Pick a path for your Character to explore down!</p>
+    </div>
+    <div id="container">
+        <div id="image">
+            <h1 id="name"></h1>
+            <img src="" alt="">
+        </div>
+        <div id="controls">
+            <button id="Saturn" onclick="ChangeBackground('Img\\Planets\\Saturn.jpg', 'Saturn', this)">Saturn</button>
+            <button id="Mars" onclick="ChangeBackground('Img\\Planets\\Mars.jpg', 'Mars', this)">Mars</button>
+            <button id="Upcoming1" onclick="ChangeBackground('Img\\Planets\\Upcoming.png', 'Upcoming', this)">Upcoming</button>
+            <button id="Upcoming2" onclick="ChangeBackground('Img\\Planets\\Upcoming.png', 'Upcoming', this)">Upcoming</button>
+        </div>
+        <div id="controller">
+            <button id="home-button" onclick="BackHome('home')">Home</button>
+            <a id="begin-button" onclick="beginAdventure()">Begin</a>
+            <button id="back-button" onclick="backButtonAction()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get character and image URL from URL parameters
+            var character = getParameterByName('character');
+            var image = getParameterByName('image');
+        });
+
+        function ChangeBackground(imageUrl, characterName, characterButton) {
+    var container = document.getElementById("container");
+    var beginButton = document.getElementById("begin-button");
+    var imageElement = document.querySelector("#image img");
+
+    // Set background image
+    container.style.backgroundImage = `url('${imageUrl}')`;
+
+    // Set image source
+    imageElement.src = imageUrl;
+
+    // Update character name
+    document.getElementById("name").innerHTML = characterName;
+
+    // Remove the 'active' class from all buttons
+    document.querySelectorAll('button').forEach(button => {
+        button.classList.remove('active');
+    });
+
+    // Add the 'active' class to the clicked button
+    characterButton.classList.add('active');
+
+    // Show/hide the Begin button based on the clicked button
+    if (characterName === 'Saturn' || characterName === 'Mars') {
+        beginButton.style.display = "block";
+    } else {
+        beginButton.style.display = "none";
+    }
+
+    // Apply Saturn or Mars CSS class to the container
+    container.classList.remove('saturn', 'mars'); // Remove previous classes
+    container.classList.add(characterName.toLowerCase());
+}
+        // home button
+        function BackHome() {
+            window.location.href = 'HomePage.html';
+        }
+        // back button
+        function backButtonAction() {
+            window.location.href = 'CharacterSelection.html';
+        }
+        // begin adventure to chosen button html
+        function beginAdventure() {
+        var activeButton = document.querySelector('.active');
+        if (activeButton) {
+        var planetName = activeButton.id.toLowerCase();
+        
+        // Get the selected character and image from the URL parameters
+        var character = getParameterByName('character');
+        var image = getParameterByName('image');
+
+        // Redirect to the appropriate game page with character information
+        window.location.href = planetName + 'game.html' + '?character=' + character + '&image=' + image;
+    }
+}
+    </script>
+</body>
+</html>
